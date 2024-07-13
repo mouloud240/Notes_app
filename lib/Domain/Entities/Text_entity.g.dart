@@ -1,47 +1,44 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'NoteModel.dart';
+part of 'Text_entity.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class NoteModelAdapter extends TypeAdapter<NoteModel> {
+class TextEntityAdapter extends TypeAdapter<TextEntity> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
-  NoteModel read(BinaryReader reader) {
+  TextEntity read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return NoteModel(
-      id: fields[0] as int,
-      title: fields[1] as String,
-      content: fields[2] as TextEntity,
-      creationDate: fields[3] as DateTime,
-      updatedAt: fields[4] as DateTime?,
-      isArchived: fields[5] as bool,
+    return TextEntity(
+      content: fields[0] as String,
+      isUnderlined: fields[1] as bool,
+      isItalique: fields[2] as bool,
+      isBold: fields[3] as bool,
+      fontSize: fields[4] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, NoteModel obj) {
+  void write(BinaryWriter writer, TextEntity obj) {
     writer
-      ..writeByte(6)
-      ..writeByte(0)
-      ..write(obj.id)
-      ..writeByte(1)
-      ..write(obj.title)
-      ..writeByte(2)
-      ..write(obj.content)
-      ..writeByte(3)
-      ..write(obj.creationDate)
-      ..writeByte(4)
-      ..write(obj.updatedAt)
       ..writeByte(5)
-      ..write(obj.isArchived);
+      ..writeByte(0)
+      ..write(obj.content)
+      ..writeByte(1)
+      ..write(obj.isUnderlined)
+      ..writeByte(2)
+      ..write(obj.isItalique)
+      ..writeByte(3)
+      ..write(obj.isBold)
+      ..writeByte(4)
+      ..write(obj.fontSize);
   }
 
   @override
@@ -50,7 +47,7 @@ class NoteModelAdapter extends TypeAdapter<NoteModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is NoteModelAdapter &&
+      other is TextEntityAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

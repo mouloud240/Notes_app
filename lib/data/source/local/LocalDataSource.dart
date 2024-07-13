@@ -4,7 +4,7 @@ class Localdatasource {
   final Box<NoteModel> notesBox;
   Localdatasource({required this.notesBox});
   Future<List<NoteModel>> getNotes() async {
-    return notesBox.values.toList();
+    return await notesBox.values.toList();
   }
   Future<void> addNote(NoteModel note) async {
     await notesBox.put(note.id, note);

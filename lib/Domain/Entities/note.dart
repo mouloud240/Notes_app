@@ -1,7 +1,9 @@
+import 'package:note_app/Domain/Entities/Text_entity.dart';
+
 class Note {
   int id;
   String title;
-  String content;
+  TextEntity content;
   DateTime creationDate;
   DateTime? updatedAt;
   bool isArchived;

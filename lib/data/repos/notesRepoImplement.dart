@@ -17,7 +17,7 @@ class Notesrepoimplement implements NotesRepo {
 
   @override
   Future<List<NoteModel>> getNotes() async {
-    return localdatasource.getNotes();
+    return await localdatasource.getNotes();
   }
 
   @override
