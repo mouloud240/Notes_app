@@ -42,6 +42,7 @@ class NoteModel extends Note {
             creationDate: creationDate,
             updatedAt: updatedAt,
             isArchived: isArchived);
+
   Note toEntity() {
     return Note(
         id: id,
