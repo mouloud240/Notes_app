@@ -23,23 +23,31 @@ class NoteModel extends Note {
   final bool isArchived;
 
   NoteModel(
-    {required int id,
-    required String title,
-    required TextEntity content,
-    required DateTime creationDate,
-    DateTime? updatedAt,
-    required bool isArchived})
-    : id = id,
-      title = title,
-      content = content,
-      creationDate = creationDate,
-      updatedAt = updatedAt,
-      isArchived = isArchived,
-      super(
+      {required int id,
+      required String title,
+      required TextEntity content,
+      required DateTime creationDate,
+      DateTime? updatedAt,
+      required bool isArchived})
+      : id = id,
+        title = title,
+        content = content,
+        creationDate = creationDate,
+        updatedAt = updatedAt,
+        isArchived = isArchived,
+        super(
+            id: id,
+            title: title,
+            content: content,
+            creationDate: creationDate,
+            updatedAt: updatedAt,
+            isArchived: isArchived);
+  Note toEntity() {
+    return Note(
         id: id,
         title: title,
         content: content,
         creationDate: creationDate,
-        updatedAt: updatedAt,
         isArchived: isArchived);
+  }
 }

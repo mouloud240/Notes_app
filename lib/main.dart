@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
         initialRoute: "/",
         routes: {
           "home": (context) => const Homescreen(),
-          "noteInnerScreen": (context) => const Noteinnerscreen(),
           "textdetailsScreen": (context) => const Textdetailsscreen(),
           "plusTapScreen": (context) => const Plustapscreen(),
         });
