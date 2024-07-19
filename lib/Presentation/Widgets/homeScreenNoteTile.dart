@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive/hive.dart';
 import 'package:note_app/Domain/Entities/Text_entity.dart';
 import 'package:note_app/Domain/Entities/note.dart';
+import 'package:note_app/Domain/Entities/subEntities/taskEntity.dart';
+import 'package:note_app/Domain/Entities/subEntities/tasksEntity.dart';
 import 'package:note_app/Domain/usecases/deleteNote.dart';
 import 'package:note_app/Presentation/Screens/noteInnerScreen.dart';
 import 'package:note_app/core/constants/colors.dart';
@@ -27,11 +30,36 @@ class Homescreennotetile extends StatelessWidget {
           .call(note);
     }
 
-    String GetContent(NoteContent content) {
+    Widget GetContent(NoteContent content) {
       if (content is TextEntity) {
-        return content.content;
+        return Text(
+          content.content,
+          style: const TextStyle(
+              color: Appcolors.lightgrey,
+              fontSize: 19,
+              fontWeight: FontWeight.normal),
+        );
+      } else if (content is TasksEntity) {
+        final List<Taskentity> _tasks = content.tasks.length >= 3
+            ? content.tasks.sublist(0, 3)
+            : List.from(content.tasks);
+        return ListView.separated(
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return Text(
+                _tasks[index].task,
+                style: const TextStyle(
+                    color: Appcolors.lightgrey,
+                    fontSize: 19,
+                    fontWeight: FontWeight.normal),
+              );
+            },
+            separatorBuilder: (context, index) => SizedBox(
+                  height: 10,
+                ),
+            itemCount: _tasks.length);
       } else {
-        return "test1";
+        return const Text("Unexcpected Type");
       }
     }
 
@@ -69,8 +97,6 @@ class Homescreennotetile extends StatelessWidget {
         ));
       },
       child: Container(
-          height: 200,
-          width: 150,
           decoration: BoxDecoration(
             color: Appcolors.darkGrey,
             borderRadius: BorderRadius.circular(12),
@@ -109,13 +135,7 @@ class Homescreennotetile extends StatelessWidget {
                           fontSize: 36,
                         ),
                       ),
-                      Text(
-                        GetContent(note.content),
-                        style: const TextStyle(
-                            color: Appcolors.lightgrey,
-                            fontSize: 19,
-                            fontWeight: FontWeight.normal),
-                      )
+                      GetContent(note.content)
                     ],
                   ),
                 ),

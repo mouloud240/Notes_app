@@ -232,60 +232,59 @@ class _NoteinnerscreenState extends State<Noteinnerscreen> {
         ),
       );
     } else if (widget.note.content.getType() == 'TasksEntity') {
-      return SingleChildScrollView(
-        reverse: true,
-        child: Scaffold(
-            floatingActionButton: FloatingActionButton.extended(
-              backgroundColor: Appcolors.lightBlue,
-              onPressed: () async {
-                setState(() {
-                  _tasksList.add(Taskentity(isDone: false, task: ""));
-                });
+      return Scaffold(
+          floatingActionButton: FloatingActionButton.extended(
+            backgroundColor: Appcolors.lightBlue,
+            onPressed: () async {
+              setState(() {
+                _tasksList.add(Taskentity(isDone: false, task: ""));
+              });
 
-                await Updatenote(noteRepoImpl).call(NoteModel(
-                    id: widget.note.id,
-                    title: widget.note.title,
-                    content: TasksEntity(tasks: _tasksList),
-                    creationDate: widget.note.creationDate,
-                    isArchived: widget.note.isArchived));
-              },
-              label: const Text(
-                "Add task",
-                style: TextStyle(
-                    color: Appcolors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600),
-              ),
+              await Updatenote(noteRepoImpl).call(NoteModel(
+                  id: widget.note.id,
+                  title: widget.note.title,
+                  content: TasksEntity(tasks: _tasksList),
+                  creationDate: widget.note.creationDate,
+                  isArchived: widget.note.isArchived));
+            },
+            label: const Text(
+              "Add task",
+              style: TextStyle(
+                  color: Appcolors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600),
             ),
-            backgroundColor: Appcolors.backgroundColor,
-            appBar: AppBar(
-                backgroundColor: Appcolors.backgroundColor,
-                leading: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed('home');
+          ),
+          backgroundColor: Appcolors.backgroundColor,
+          appBar: AppBar(
+              backgroundColor: Appcolors.backgroundColor,
+              leading: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('home');
+                  },
+                  child: SizedBox(
+                    width: 5,
+                    height: 5,
+                    child: SvgPicture.asset(
+                      "assets/icons/backButton.svg",
+                    ),
+                  )),
+              elevation: 0,
+              actions: [
+                PopupMenuButton(
+                    color: Appcolors.lightgrey,
+                    onSelected: (String val) async {
+                      await handleDelete();
                     },
-                    child: SizedBox(
-                      width: 5,
-                      height: 5,
-                      child: SvgPicture.asset(
-                        "assets/icons/backButton.svg",
-                      ),
-                    )),
-                elevation: 0,
-                actions: [
-                  PopupMenuButton(
-                      color: Appcolors.lightgrey,
-                      onSelected: (String val) async {
-                        await handleDelete();
-                      },
-                      itemBuilder: (BuildContext context) {
-                        return {"Delete"}.map((String choice) {
-                          return PopupMenuItem(
-                              value: choice, child: Text(choice));
-                        }).toList();
-                      })
-                ]),
-            body: Column(children: [
+                    itemBuilder: (BuildContext context) {
+                      return {"Delete"}.map((String choice) {
+                        return PopupMenuItem(
+                            value: choice, child: Text(choice));
+                      }).toList();
+                    })
+              ]),
+          body: SingleChildScrollView(
+            child: Column(children: [
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Row(
@@ -326,6 +325,7 @@ class _NoteinnerscreenState extends State<Noteinnerscreen> {
               ),
               ListView.separated(
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: _tasksList.length,
                   separatorBuilder: (context, index) => const SizedBox(
                         height: 10,
@@ -394,41 +394,35 @@ class _NoteinnerscreenState extends State<Noteinnerscreen> {
                                     fontWeight: FontWeight.w500),
                               ),
                             ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.02,
-                              child: ElevatedButton.icon(
-                                  style: const ButtonStyle(
-                                      backgroundColor: WidgetStatePropertyAll(
-                                          Colors.transparent),
-                                      elevation: WidgetStatePropertyAll(0)),
-                                  onPressed: () async {
-                                    setState(() {
-                                      _tasksList.removeAt(index);
-                                    });
+                            ElevatedButton.icon(
+                                style: const ButtonStyle(
+                                    backgroundColor: WidgetStatePropertyAll(
+                                        Colors.transparent),
+                                    elevation: WidgetStatePropertyAll(0)),
+                                onPressed: () async {
+                                  setState(() {
+                                    _tasksList.removeAt(index);
+                                    print('deleted');
+                                  });
 
-                                    await Updatenote(noteRepoImpl).call(
-                                        NoteModel(
-                                            id: widget.note.id,
-                                            title: widget.note.title,
-                                            content:
-                                                TasksEntity(tasks: _tasksList),
-                                            creationDate:
-                                                widget.note.creationDate,
-                                            isArchived:
-                                                widget.note.isArchived));
-                                  },
-                                  label: const Icon(
-                                    Icons.delete,
-                                    color: Appcolors.red,
-                                  )),
-                            )
+                                  await Updatenote(noteRepoImpl).call(NoteModel(
+                                      id: widget.note.id,
+                                      title: widget.note.title,
+                                      content: TasksEntity(tasks: _tasksList),
+                                      creationDate: widget.note.creationDate,
+                                      isArchived: widget.note.isArchived));
+                                },
+                                label: const Icon(
+                                  Icons.delete,
+                                  color: Appcolors.red,
+                                ))
                           ],
                         ),
                       ),
                     );
                   }),
-            ])),
-      );
+            ]),
+          ));
     } else {
       return Text(widget.note.runtimeType.toString());
     }
