@@ -46,6 +46,7 @@ class _HomescreenState extends State<Homescreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: CustomButtonWidget(
         buttonIcon: Icons.add,
         onclickFuntction: () {
@@ -53,6 +54,9 @@ class _HomescreenState extends State<Homescreen> {
         },
       ),
       backgroundColor: Appcolors.black,
+      bottomNavigationBar: BottomAppBar(
+        color: Appcolors.backgroundColor,
+      ),
       body: ValueListenableBuilder(
         valueListenable: _mybox.listenable(),
         builder: (context, box, widget) {

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive/hive.dart';
 import 'package:note_app/Domain/Entities/Text_entity.dart';
+import 'package:note_app/Domain/Entities/subEntities/taskEntity.dart';
+import 'package:note_app/Domain/Entities/subEntities/tasksEntity.dart';
 import 'package:note_app/Domain/usecases/addNote.dart';
 import 'package:note_app/Presentation/Screens/noteInnerScreen.dart';
 import 'package:note_app/Presentation/Widgets/CutombuttonWigdet.dart';
@@ -27,13 +29,34 @@ class Plustapscreen extends StatelessWidget {
               1;
       NoteModel _addedNote = NoteModel(
           id: nextId,
-          title: "I am the Hunter",
+          title: "",
           content: TextEntity(
-              content: "This is the end",
+              content: "",
               isUnderlined: false,
               isItalique: false,
               isBold: false,
               fontSize: 20),
+          creationDate: DateTime.now(),
+          isArchived: false);
+      await AddNote(
+              notesRepo: Notesrepoimplement(
+                  localdatasource: Localdatasource(notesBox: _mybox)))
+          .call(_addedNote);
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => Noteinnerscreen(note: _addedNote)));
+    }
+
+    Future<void> handleTaskClick() async {
+      int nextId =
+          (_mybox.isNotEmpty ? _mybox.getAt(_mybox.length - 1)?.id ?? -1 : -1) +
+              1;
+      NoteModel _addedNote = NoteModel(
+          id: nextId,
+          title: "",
+          content: TasksEntity(tasks: [
+           
+          ]),
           creationDate: DateTime.now(),
           isArchived: false);
       await AddNote(
@@ -108,7 +131,9 @@ class Plustapscreen extends StatelessWidget {
                           name: "Tasks",
                           iconPath: "assets/icons/task.svg",
                           backgroundColor: Appcolors.blue,
-                          onclickfunction: () {})
+                          onclickfunction: () {
+                            handleTaskClick();
+                          })
                     ],
                   )
                 ],

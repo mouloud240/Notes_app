@@ -1,9 +1,10 @@
 import 'package:hive/hive.dart';
+import 'package:note_app/Domain/Entities/note.dart';
 
 part 'Text_entity.g.dart';
 
-@HiveType(typeId: 0)
-class TextEntity extends HiveObject {
+@HiveType(typeId: 1)
+class TextEntity extends HiveObject implements NoteContent {
   @HiveField(0)
   final String content;
 
@@ -26,4 +27,9 @@ class TextEntity extends HiveObject {
     required this.isBold,
     required this.fontSize,
   });
+
+  @override
+  String getType() {
+    return 'TextEntity';
+  }
 }

@@ -20,7 +20,6 @@ class CustomButtonWidget extends StatelessWidget {
             backgroundColor: Appcolors.lightBlue,
             onPressed: () {
               onclickFuntction();
-              print("Clicked button");
             },
             splashColor: Colors.transparent,
             child: Icon(

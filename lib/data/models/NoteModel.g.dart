@@ -19,7 +19,7 @@ class NoteModelAdapter extends TypeAdapter<NoteModel> {
     return NoteModel(
       id: fields[0] as int,
       title: fields[1] as String,
-      content: fields[2] as TextEntity,
+      content: fields[2] as NoteContent,
       creationDate: fields[3] as DateTime,
       updatedAt: fields[4] as DateTime?,
       isArchived: fields[5] as bool,

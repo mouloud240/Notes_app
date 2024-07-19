@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
-import 'package:note_app/Domain/Entities/Note.dart';
 import 'package:note_app/Domain/Entities/Text_entity.dart';
+import 'package:note_app/Domain/Entities/note.dart';
 part 'NoteModel.g.dart'; // Necessary for Hive type adapter generation
 
 @HiveType(typeId: 0)
@@ -12,7 +12,7 @@ class NoteModel extends Note {
   final String title;
 
   @HiveField(2)
-  final TextEntity content;
+  final NoteContent content;
 
   @HiveField(3)
   final DateTime creationDate;
@@ -25,7 +25,7 @@ class NoteModel extends Note {
   NoteModel(
       {required int id,
       required String title,
-      required TextEntity content,
+      required NoteContent content,
       required DateTime creationDate,
       DateTime? updatedAt,
       required bool isArchived})
